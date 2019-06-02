@@ -43,4 +43,49 @@ SOTTO IPV4 INSERIRE L'IP DELLE CONNESSIONI IN ENTRATA. PER PERMTTERE QUALSIASI C
 host all all 0.0.0.0/0 md5
 sudo service postgresql restart
 
+INSTALLAZIONE DI DJANGO
+
+sudo apt update
+
+python3 -V #verificare versione python
+
+sudo apt install python3-django
+
+django-admin --version #testa l'installazione
+
+INSTALLA DJANGO IN AMBIENTE VIRTUALE
+
+sudo apt install python3-pip #pacchetto pip
+sudo apt install python3-venv #pacchetto venv
+
+#creare una directory per opsitare i progetti
+
+mkdir ~/django_project
+cd ~/django_project
+
+python3.6 -m venv my_env #crea un'ambiente virtuale (my_env) all'interno della cartella
+source my_env/bin/activate #attiva l'ambiente virtuale (nel prompt compare (my_env)
+
+(my_env) $ pip install django
+(my_env) $ django-admin --version
+(my_env) $ deactivate #per disattivare l'ambiente virtuale
+
+#creare un progetto di esempio
+(my_env) $ django-admin startproject djangoapp . #importante il punto finale
+
+#migrazione django funziona definendo dei modelli. Per applicare le modifiche apportate ai modelli bisogna effettura la migrazione verso il database di riferimento che è sqlite di default
+(my_env) $ pyhton manage.py migrate
+
+(my_env) $ python manage.py createsuperuser #crea un super user
+
+(my_env) $ nano /django_project/djangoapp/settings.py
+ALLOWED_HOSTS = ['your_server_ip_or_domain', 'your_second_ip_or_domain', . . .]
+
+#testign del server
+(my_env) $ sudo ufw allow 8000
+(my_env) $ python manage.py runserver 192.x.x.x:8000
+
+http://192.x.x.x:8000
+
+#interfaccia amministratore hhtp://192.x.x.x:8000/admin/
 
