@@ -1,0 +1,5 @@
+ISTRUZIONI PER L'INSTALLAZIONE SU SERVER UBUNTU
+
+INSTALLARE APACHE2 (*opzionale)
+
+<code> sudo apt install apache2</code>
