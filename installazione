@@ -71,7 +71,10 @@ source my_env/bin/activate #attiva l'ambiente virtuale (nel prompt compare (my_e
 (my_env) $ deactivate #per disattivare l'ambiente virtuale
 
 #creare un progetto di esempio
-(my_env) $ django-admin startproject djangoapp . #importante il punto finale
+(my_env) $ django-admin startproject mysite . #importante il punto finale
+
+#creare un app di esempio
+(my_env) $ django-admin startapp polls
 
 #migrazione django funziona definendo dei modelli. Per applicare le modifiche apportate ai modelli bisogna effettura la migrazione verso il database di riferimento che è sqlite di default
 (my_env) $ pyhton manage.py migrate
