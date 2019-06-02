@@ -1,0 +1,46 @@
+ISTRUZIONI PER L'INSTALLAZIONE SU SERVER UBUNTU
+
+INSTALLARE APACHE2 (*opzionale)
+
+sudo apt install apache2
+
+VERIFICARE INDIRIZZO IP DEL PROPRIO PC/SERVER
+
+hostname -I
+
+IMPOSTAZIONI FIREWALL
+
+sudo ufw app list
+sudo ufw allow 'Apache'
+sudo ufw status
+
+VERIFICARE LO STATO DI APACHE
+
+sudo systemctl status apache2
+
+VERIFICARE FUNZIONAMENTO APACHE
+
+http://your_server_ip
+
+COMANDI DI APACHE
+sudo systemctl stop apache2
+sudo systemctl start apache2
+sudo systemctl restart apache2
+sudo systemctl reload apache2
+
+INSTALLARE POSTGRESQL+POSTGIS
+
+sudo apt && sudo apt upgrade
+sudo apt install postgis
+sudo passwd postgres
+sudo -u postgres createdb test_data
+sudo -u postgres psql
+ALTER USER postgres PASSWORD ''
+sudo nano /etc/postgresql/10/main postgresql.conf
+MODIFICARE LISTEN ADDRESSESS -> ELEIMINARE IL # E INSERIRE '*'
+sudo nano /etc/postgresql/10/main pg_hba.conf
+SOTTO IPV4 INSERIRE L'IP DELLE CONNESSIONI IN ENTRATA. PER PERMTTERE QUALSIASI CONNESSIONE DIGITARE
+host all all 0.0.0.0/0 md5
+sudo service postgresql restart
+
+
