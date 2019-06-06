@@ -1,5 +1,9 @@
 ISTRUZIONI PER L'INSTALLAZIONE SU SERVER UBUNTU
 
+ACCEDERE AL TERMINALE UTILZZANDO PUTTY
+sudo apt install openssh-server
+ifconfig
+
 INSTALLARE APACHE2 (*opzionale)
 
 sudo apt install apache2
@@ -58,7 +62,7 @@ INSTALLA DJANGO IN AMBIENTE VIRTUALE
 sudo apt install python3-pip #pacchetto pip
 sudo apt install python3-venv #pacchetto venv
 
-#creare una directory per opsitare i progetti
+#creare una directory per ospitare i progetti
 
 mkdir ~/django_project
 cd ~/django_project
