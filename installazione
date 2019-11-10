@@ -164,3 +164,7 @@ python3 manage.py migrate
 ## creare il modello per locallibrary
 
 <img src='https://mdn.mozillademos.org/files/16479/local_library_model_uml.png'>
+
+
+
+
