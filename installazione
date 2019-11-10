@@ -77,7 +77,7 @@ source my_env/bin/activate #attiva l'ambiente virtuale (nel prompt compare (my_e
 #creare un progetto di esempio
 (my_env) $ django-admin startproject mysite . #importante il punto finale
 
-#creare un app di esempio
+#creare un app di esempio all'interno di mysite
 (my_env) $ django-admin startapp polls
 
 #migrazione django funziona definendo dei modelli. Per applicare le modifiche apportate ai modelli bisogna effettura la migrazione verso il database di riferimento che è sqlite di default
@@ -96,3 +96,71 @@ http://192.x.x.x:8000
 
 #interfaccia amministratore hhtp://192.x.x.x:8000/admin/
 
+##################### local library example ################################
+python3 manage.py startapp catalog
+#registrare la nuova app catalog (n.b. con d.jango è preferibile creare aplicazioni separate per ogni applicazione es. sito, area download, blog)
+(my_env) sudo nano locallibrary/locallibrary/settings.py
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'catalog', 
+]
+#altre imostazioni
+#è possibile cambiare il database, secret_key e debug
+TIME_ZONE = 'Europe/London'
+ALLOWED_HOSTS = ['your_server_ip_or_domain', 'your_second_ip_or_domain', . . .]
+#testign del server
+(my_env) $ sudo ufw allow 8000
+(my_env) $ python manage.py runserver 192.x.x.x:8000
+
+http://192.x.x.x:8000
+
+#modificare urls.py
+(my_env) $ sudo nano locallibrary/locallibrary/urls.py
+from django.contrib import admin
+from django.urls import path
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+]
+
+# Use include() to add paths from the catalog application 
+from django.urls import include
+from django.urls import path
+
+urlpatterns += [
+    path('catalog/', include('catalog.urls')),
+]
+
+#Add URL maps to redirect the base URL to our application
+from django.views.generic import RedirectView
+urlpatterns += [
+    path('', RedirectView.as_view(url='catalog/', permanent=True)),
+]
+
+# Use static() to add url mapping to serve static files during development (only)
+from django.conf import settings
+from django.conf.urls.static import static
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+### creare urls.py nella cartella dell'app catalog
+(my_env)$ sudo touch urls.py
+### scrivere nella cartella
+(my_env)$ sudo nano urls.py
+from django.urls import path
+from . import views
+
+urlpatterns = [
+
+]
+#eseguire la migrazione del database
+python3 manage.py makemigrations
+python3 manage.py migrate
+
+## creare il modello per locallibrary
+
+<img src='https://mdn.mozillademos.org/files/16479/local_library_model_uml.png'>
