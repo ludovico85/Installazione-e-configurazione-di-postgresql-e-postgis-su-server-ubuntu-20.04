@@ -1,2 +1,38 @@
-#cercare l'indirizzo ip
+---cercare l'indirizzo ip---
 ip addr show
+
+---sbloccare gli aggiornamenti---
+#1-Stop the automatic updater.
+sudo dpkg-reconfigure -plow unattended-upgrades
+
+#2-Make sure any packages in an unclean state are installed correctly.
+sudo dpkg --configure -a
+
+#3-Get your system up-top-date.
+sudo apt update && sudo apt -f install && sudo apt full-upgrade
+
+#4-Turn the automatic updater back on, now that the blockage is cleared.
+sudo dpkg-reconfigure -plow unattended-upgrades
+
+#-se punto 2 non funziona
+#2.1 First, find out the id of the process that is holding the lock file.
+lsof /var/lib/dpkg/lock-frontend
+
+#-2.2 Use this PID to kill the process.
+sudo kill -9 PID
+
+#-2.3 remove the lock and reconfigure dpkg:
+sudo rm /var/lib/dpkg/lock-frontend
+sudo dpkg --configure -a
+
+---creare una nuova cartella---
+sudo mkdir /home/user/newFolder
+
+---rimuovere la cartella e tutti i file
+rm -rf folder
+
+---reinstallare un pacchetto---
+apt-get install --reinstall packagename
+
+---disinstallare un pacchetto---
+sudo apt-get purge --auto-remove packagename

@@ -1,78 +1,75 @@
-ISTRUZIONI PER L'INSTALLAZIONE SU SERVER UBUNTU
+---ISTRUZIONI PER L'INSTALLAZIONE SU SERVER UBUNTU---
 
-ACCEDERE AL TERMINALE UTILZZANDO PUTTY
+---ACCEDERE AL TERMINALE UTILZZANDO PUTTY---
 sudo apt install openssh-server
 ifconfig
 
-INSTALLARE APACHE2 (*opzionale)
-
+---INSTALLARE APACHE2 (*opzionale)---
 sudo apt install apache2
 
-VERIFICARE INDIRIZZO IP DEL PROPRIO PC/SERVER
-
+#VERIFICARE INDIRIZZO IP DEL PROPRIO PC/SERVER
 hostname -I
 
-IMPOSTAZIONI FIREWALL
-
+#IMPOSTAZIONI FIREWALL
 sudo ufw app list
 sudo ufw allow 'Apache'
 sudo ufw status
 
-VERIFICARE LO STATO DI APACHE
-
+#VERIFICARE LO STATO DI APACHE
 sudo systemctl status apache2
 
-VERIFICARE FUNZIONAMENTO APACHE
-
+#VERIFICARE FUNZIONAMENTO APACHE
 http://your_server_ip
 
-COMANDI DI APACHE
+#COMANDI DI APACHE
 sudo systemctl stop apache2
 sudo systemctl start apache2
 sudo systemctl restart apache2
 sudo systemctl reload apache2
 
-INSTALLARE POSTGRESQL+POSTGIS
-
+---INSTALLARE POSTGRESQL+POSTGIS---
 sudo apt && sudo apt upgrade
 sudo apt install postgis
-sudo passwd postgres
 sudo -u postgres createdb test_data
 sudo -u postgres psql
-ALTER USER postgres PASSWORD ''
+ALTER USER postgres PASSWORD '';
 sudo nano /etc/postgresql/10/main postgresql.conf
-MODIFICARE LISTEN ADDRESSESS -> ELEIMINARE IL # E INSERIRE '*'
+#MODIFICARE LISTEN ADDRESSESS -> ELEIMINARE IL # E INSERIRE '*'
 sudo nano /etc/postgresql/10/main pg_hba.conf
-SOTTO IPV4 INSERIRE L'IP DELLE CONNESSIONI IN ENTRATA. PER PERMTTERE QUALSIASI CONNESSIONE DIGITARE
+#SOTTO IPV4 INSERIRE L'IP DELLE CONNESSIONI IN ENTRATA. PER PERMTTERE QUALSIASI CONNESSIONE DIGITARE
 host all all 0.0.0.0/0 md5
 sudo service postgresql restart
 
-INSTALLAZIONE DI DJANGO
-
+---INSTALLAZIONE DI DJANGO---
 sudo apt update
-
-python3 -V #verificare versione python
-
+#verificare versione python
+python3 -V
+pip install psycopg2
 sudo apt install python3-django
 
-django-admin --version #testa l'installazione
+#testa l'installazione
+django-admin --version 
 
-INSTALLA DJANGO IN AMBIENTE VIRTUALE
-
+#INSTALLA DJANGO IN AMBIENTE VIRTUALE
 sudo apt install python3-pip #pacchetto pip
 sudo apt install python3-venv #pacchetto venv
 
 #creare una directory per ospitare i progetti
-
 mkdir ~/django_project
 cd ~/django_project
 
-python3.6 -m venv my_env #crea un'ambiente virtuale (my_env) all'interno della cartella
-source my_env/bin/activate #attiva l'ambiente virtuale (nel prompt compare (my_env)
+#crea un'ambiente virtuale (my_env) all'interno della cartella
+python3.6 -m venv my_env
+###Suggerimento: meglio utilizzare env differenti per i diversi progetti per non creare problemi di compatibilità con le versioni. Creare quindi una cartella Environments e creare all'interno diversi ambienti di pyhton. 
 
+source my_env/bin/activate #attiva l'ambiente virtuale (nel prompt compare (my_env); nell'ambiente virtuale non ci sono pacchetti installati e quindi bisogna installarli (numpy, ptz, psutil)
+(my_env) $ pip list #lista dei pacchetti
 (my_env) $ pip install django
 (my_env) $ django-admin --version
 (my_env) $ deactivate #per disattivare l'ambiente virtuale
+
+sudo apt-get install libpq-dev python-dev
+pip install psycopg2
 
 #creare un progetto di esempio
 (my_env) $ django-admin startproject mysite . #importante il punto finale
@@ -109,7 +106,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'catalog', 
 ]
-#altre imostazioni
+#altre impostazioni
 #è possibile cambiare il database, secret_key e debug
 TIME_ZONE = 'Europe/London'
 ALLOWED_HOSTS = ['your_server_ip_or_domain', 'your_second_ip_or_domain', . . .]
@@ -164,6 +161,62 @@ python3 manage.py migrate
 ## creare il modello per locallibrary
 
 <img src='https://mdn.mozillademos.org/files/16479/local_library_model_uml.png'>
+
+
+
+######### blog example ####################
+#all'interno della cartella django-project creiamo diverse app. La prima app è blog con il segeunte comando.
+python manage.py startapp blog
+.
+├── blog
+│   ├── admin.py
+│   ├── apps.py
+│   ├── __init__.py
+│   ├── migrations
+│   │   └── __init__.py
+│   ├── models.py
+│   ├── tests.py
+│   └── views.py
+├── db.sqlite3
+├── django_project
+│   ├── asgi.py
+│   ├── __init__.py
+│   ├── __pycache__
+│   │   ├── __init__.cpython-36.pyc
+│   │   ├── settings.cpython-36.pyc
+│   │   ├── urls.cpython-36.pyc
+│   │   └── wsgi.cpython-36.pyc
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+└── manage.py
+
+
+
+urlpatterns = [
+    path('', views.home, name='blog-home'),
+    path('about/', views.about, name='about-home'),
+]
+
+#connettere il database porstgresql
+settings.py
+DATABASES = {
+	'deafult':{
+		'ENGINE': 'django.db.backends.postgresql',
+		'NAME': 'dbname',
+		'USER': 'dbuser',
+		'PASSWORD' : 'dbpassword',
+		'HOST' : 'db host name',
+		'PORT' : 'db port name'
+	}
+}
+
+#per vedere sql creato
+python manage.py sqlmigrate blog 001 #(001 numero della migrazione)
+
+
+pip install django-crispy-form
+
 
 
 
