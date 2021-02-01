@@ -32,11 +32,11 @@ sudo apt && sudo apt upgrade
 sudo apt install postgis
 sudo -u postgres createdb test_data
 sudo -u postgres psql
-ALTER USER postgres PASSWORD '';
+ALTER USER postgres PASSWORD ''; #inserire una password
 sudo nano /etc/postgresql/10/main postgresql.conf
 #MODIFICARE LISTEN ADDRESSESS -> ELEIMINARE IL # E INSERIRE '*'
 sudo nano /etc/postgresql/10/main pg_hba.conf
-#SOTTO IPV4 INSERIRE L'IP DELLE CONNESSIONI IN ENTRATA. PER PERMTTERE QUALSIASI CONNESSIONE DIGITARE
+#SOTTO IPV4 INSERIRE L'IP DELLE CONNESSIONI IN ENTRATA. PER PERMTTERE QUALSIASI CONNESSIONE DIGITARE ED ELIMINARE LA VECCHIA STRINGA
 host all all 0.0.0.0/0 md5
 sudo service postgresql restart
 
