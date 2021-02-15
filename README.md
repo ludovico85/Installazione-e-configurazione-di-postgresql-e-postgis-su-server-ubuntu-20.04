@@ -1,6 +1,6 @@
 # Installazione e configurazione di postgresql e postgis su server ubuntu 20.04
 
-##Settaggio iniziale del server Ubuntu
+## Settaggio iniziale del server Ubuntu
 In ambiente Linux, l'utente ***root*** è l'utente amministratore e possiede moltissimi privilegi. Per tali motivi è altamente sconsigliato utilizzarlo (rischio di danni irreversibili). Invece è consigliato creare un nuovo utente e loggarsi con quest'ultimo.
 
 ### 1) Creazione di un nuovo utente
