@@ -1,6 +1,8 @@
 # Installazione e configurazione di postgresql e postgis su server ubuntu 20.04
 
 ## Settaggio iniziale del server Ubuntu
+Istruzioni tradotte da https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-20-04
+
 In ambiente Linux, l'utente ***root*** è l'utente amministratore e possiede moltissimi privilegi. Per tali motivi è altamente sconsigliato utilizzarlo (rischio di danni irreversibili). Invece è consigliato creare un nuovo utente e loggarsi con quest'ultimo.
 
 ### 1) Creazione di un nuovo utente
@@ -42,6 +44,9 @@ Per verificare lo stato e le connessioni consentite:
 ```
 ufw status
 ```
+
+***Il firewall in questo momento blocca tutte le connessioni in entrata tranne che SSH;*** Nel caso di installazione di servizi addizzionali è necessario modificare le impostazioni del firewall.
+
 
 Per prima cosa è necessario aggiornare i pacchetti di ubuntu
 
