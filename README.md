@@ -49,7 +49,7 @@ ufw status
 
 ***Il firewall in questo momento blocca tutte le connessioni in entrata tranne che SSH;*** Nel caso di installazione di servizi addizzionali è necessario modificare le impostazioni del firewall.
 
-## Installazione di Apache Web Server (opzionale, necessario per pgadmin4)
+## Installazione di Apache Web Server (opzionale, necessario per pgAdmin4)
 Istruzioni tradotte da https://www.digitalocean.com/community/tutorials/how-to-install-the-apache-web-server-on-ubuntu-20-04
 
 Per installare Apache digitare:
