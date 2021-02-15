@@ -20,6 +20,8 @@ Da utente ***root*** digitare il comando:
 usermod -aG sudo wilson
 ```
 
+Pee switchare
+
 ### 3) Impostazione del Firewall
 Ufw è l'applicazione predefinita di Ubuntu per la configurazione del firewall. Per vedere la lista della applicazioni gestite da Ufw:
 
@@ -47,6 +49,63 @@ ufw status
 
 ***Il firewall in questo momento blocca tutte le connessioni in entrata tranne che SSH;*** Nel caso di installazione di servizi addizzionali è necessario modificare le impostazioni del firewall.
 
+## Installazione di Apache Web Server (opzionale, necessario per pgadmin4)
+https://www.digitalocean.com/community/tutorials/how-to-install-the-apache-web-server-on-ubuntu-20-04
+Per installare Apache digitare
+
+```
+sudo apt install apache2
+```
+
+Modificare le impostazioni del firewall
+
+```
+sudo ufw app list
+```
+
+```
+sudo ufw allow 'Apache'
+```
+
+Per verificare lo stato di Apache digitare
+
+```
+sudo systemctl status apache2
+```
+
+Per mostrare gli indirizzi IP
+
+```
+hostname -I
+```
+
+Per stoppare, avviare (quando stoppato) e riavviare (stoppare e avviare il servizio) digitare:
+
+```
+sudo systemctl stop apache2
+```
+
+```
+sudo systemctl start apache2
+```
+
+```
+sudo systemctl restart apache2
+```
+
+Di default il sistema è settato per avviare Apache in automatico. Per disattivare tale comportamento:
+
+```
+sudo systemctl disable apache2
+```
+
+Per riabilitarlo:
+
+```
+sudo systemctl enable apache2
+```
+
+## Installazione di PostgreSQL
 
 Per prima cosa è necessario aggiornare i pacchetti di ubuntu
 
