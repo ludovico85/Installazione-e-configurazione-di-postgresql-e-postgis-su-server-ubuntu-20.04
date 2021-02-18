@@ -181,6 +181,23 @@ psql
 
 ## installare pgadmin4 in server mode
 
+Tutorial tradotto da https://www.digitalocean.com/community/tutorials/how-to-install-configure-pgadmin4-server-mode
+
+Prerequisiti necessari sono 1) un server correttamente configurato 2) Apache installato sul server 3) Postgresql installato e 4) Python3 e ```venv``` installati sul server.
+
+## Installazione di Python3
+
+Ubuntu viene distribuito con python3 installato. Quindi è sufficiente aggiornare i pacchetti e veirificare la versione di python installata.
+
+```
+sudo apt update
+sudo apt -y upgrade
+```
+
+```
+python3 -V
+```
+
 
 Per installare PgAdmin4, installare prima curl
 
