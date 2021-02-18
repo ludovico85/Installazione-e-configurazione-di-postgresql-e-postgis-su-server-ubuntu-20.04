@@ -20,7 +20,11 @@ Da utente ***root*** digitare il comando:
 usermod -aG sudo wilson
 ```
 
-Pee switchare
+Per switchare tra utenti:
+
+```
+sudo -i -u wilson
+```
 
 ### 3) Impostazione del Firewall
 Ufw è l'applicazione predefinita di Ubuntu per la configurazione del firewall. Per vedere la lista della applicazioni gestite da Ufw:
@@ -108,11 +112,7 @@ sudo systemctl enable apache2
 
 ## Installazione di PostgreSQL
 
-Per prima cosa è necessario aggiornare i pacchetti di ubuntu
-
-```
-sudo apt update
-```
+Tutorial tradotto da https://www.digitalocean.com/community/tutorials/how-to-install-postgresql-on-ubuntu-20-04-quickstart
 
 Per installare PostgreSQL insieme ad altre utility, aggiungere ```-contrib``` all'installazione.
 
@@ -150,15 +150,23 @@ sudo -u postgres psql
 ```
 
 Di default l'account postgres non ha alcuna password settata. Per settare una nuova password digitare:
+
 ```
 postgres=# ALTER USER postgres PASSWORD 'myPassword';
 ```
-
-Per aggiungere un nuovo ruolo e aggiungere il nome del nuovo user
+Un altro assunto di PostgreSQL prevede che qualsiasi ruolo utilizzato per loggarsi debba avere un database associato con lo stesso nome. Per creare un nuovo db come utente postgres:
 
 ```
-sudo -u postgres createuser --interactive --pwprompt
+createdb wilson
 ```
+
+Adesso è possibile connettersi al nuovo db utilizzando il ruolo creato in precedenza.
+
+```
+sudo -i -u wilson
+psql
+```
+
 
 ## installare pgadmin4 in server mode
 
