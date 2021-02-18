@@ -53,6 +53,17 @@ ufw status
 
 ***Il firewall in questo momento blocca tutte le connessioni in entrata tranne che SSH;*** Nel caso di installazione di servizi addizzionali è necessario modificare le impostazioni del firewall.
 
+### 4) Abilitare l'accesso agli utenti
+
+Una volta che è stato creato un nuovo utente bisogna assicurare l'accesso diretto al server che dipende dalla tipologia di autenticazione scelta. Se ci si logga come root utilizzando una chiave SSH, bisogna aggiungere una copia public key al nuovo utente. Siccome una copia della chiave esiste già per l'account root, basta copiarla per il nuovo account, settare i permessi giusti e modificare la proprietà del file.
+
+
+```
+rsync --archive --chown=wilson:wilson ~/.ssh /home/wilson
+```
+
+Adesso è possibile iniziare una nuova sessione loggandosi con il nuovo utente.
+
 ## Installazione di Apache Web Server (opzionale, necessario per pgAdmin4)
 Istruzioni tradotte da https://www.digitalocean.com/community/tutorials/how-to-install-the-apache-web-server-on-ubuntu-20-04
 
