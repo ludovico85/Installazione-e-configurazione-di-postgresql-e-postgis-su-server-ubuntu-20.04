@@ -395,4 +395,14 @@ sudo nano /etc/postgresql/12/main/postgresql.conf
 ```
 
 Modificare i parametri:
-* dfsfs
+* shared_buffers = circa il 75% della RAM disponibile;
+* work_mem = 16MB
+* maintenance_work_mem = 128MB
+* checkpoint_segments = 6
+* random_page_cost = 2.0
+
+Riavviare il servizio:
+
+```
+sudo service postgresql restart
+```
