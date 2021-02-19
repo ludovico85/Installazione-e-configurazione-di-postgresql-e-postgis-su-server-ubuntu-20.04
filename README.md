@@ -1,4 +1,4 @@
-# Installazione e configurazione di postgresql e postgis su server ubuntu 20.04
+# Installazione e configurazione di postgresql e postgis su server Ubuntu 20.04
 
 ## Settaggio iniziale del server Ubuntu
 Istruzioni tradotte da https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-20-04
@@ -179,13 +179,13 @@ psql
 ```
 
 
-## installare pgAdmin4 in server mode
+## Installazione di pgAdmin4 in server mode
 
 Tutorial tradotto da https://www.digitalocean.com/community/tutorials/how-to-install-configure-pgadmin4-server-mode
 
 Prerequisiti necessari sono 1) un server correttamente configurato 2) Apache installato sul server 3) Postgresql installato e 4) Python3 e ```venv``` installati sul server.
 
-## Installazione di Python3
+### Installazione di Python3
 
 Ubuntu viene distribuito con python3 installato. Quindi è sufficiente aggiornare i pacchetti e veirificare la versione di python installata.
 
@@ -242,7 +242,7 @@ source my_env/bin/activate
 ```
 
 
-## Installazione di pgAdmin4
+### Installazione di pgAdmin4
 
 Bisogna scaricare manualmente il codice sorgente di pgAdmin4 per essere eseguito in python. Cliccare sul seguente link https://www.postgresql.org/ftp/pgadmin/pgadmin4/ scegliere l'utlima versione e navigare nella cartella pip. Copiare il link del file che trmina per .whl e da terminale, tramite il comando wget, scaircare il file all'interno del server.
 
@@ -262,7 +262,7 @@ Installare il pacchetto pgAdmin 4 con il seguente comando:
 python -m pip install pgadmin4-4.30-py3-none-any.whl
 ```
 
-## Configurare pgAdmin 4
+### Configurazione di pgAdmin 4
 
 E' possibile configurare pgAdmin 4 modificando il file config.py. Per evitare problemi creeremo il file config_local.py le cui impostazioni verranno lette dopo il primo file.
 
@@ -299,7 +299,7 @@ sudo chown -R www-data:www-data /var/lib/pgadmin4/
 sudo chown -R www-data:www-data /var/log/pgadmin4/
 ```
 
-## Configurare Apache
+### Configurarazione di Apache
 
 Apache web server utilizza i virtual host per caratterizzare le configurazioni ed opsitare più di un dominio dal singolo server. Settiamo un virtual host specifico per pgAdmin. Spostiamoci nella directory principale:
 
@@ -353,3 +353,46 @@ Attivare il virtual host:
 ```
 sudo systemctl restart apache2
 ```
+
+Digitare l'indirizzo IP in qualsiasi browser e connettersi a pgAdmin 4.
+
+Di default PostgreSQL prende l'user Ubuntu e lo utilizza come username per il database. E' consigliabile settare una password per l'accesso. Dal terminale connettersi a PostgreSQL e settare la password.
+
+```
+sudo -u wilson psql
+
+ALTER USER sammy PASSWORD 'password';
+```
+
+## Installazione di PostGIS
+
+Uno dei possibili modi per installare PostGIS su server ubuntu è quello di utilizzare UbuntuGIS. Per prima cosa bisogna aggiungere il repository:
+
+```
+sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable
+```
+
+Aggiornare i pacchetti:
+
+sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable
+
+```
+sudo apt-get update
+```
+
+Infine installare PostGIS:
+
+```
+sudo apt-get install postgis
+```
+
+Per abilitare PostGIS si può utilizzare direttamente pgAdmin4.
+
+Per ottimizzare PostGIS bisogna editare il file di configurazione postgresql.conf:
+
+```
+sudo nano /etc/postgresql/12/main/postgresql.conf
+```
+
+Modificare i parametri:
+* dfsfs
