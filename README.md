@@ -179,7 +179,7 @@ psql
 ```
 
 
-## installare pgadmin4 in server mode
+## installare pgAdmin4 in server mode
 
 Tutorial tradotto da https://www.digitalocean.com/community/tutorials/how-to-install-configure-pgadmin4-server-mode
 
@@ -193,22 +193,163 @@ Ubuntu viene distribuito con python3 installato. Quindi è sufficiente aggiornar
 sudo apt update
 sudo apt -y upgrade
 ```
+Per verificare la versione:
 
 ```
 python3 -V
 ```
 
-
-Per installare PgAdmin4, installare prima curl
-
-```
-sudo apt install curl
-```
-
-PgAdmin4 non è disponibile di default nei repo di Ubuntu. Bisonga installarlo dal repo di pgAdmin4 APT.
+Successivamente bisogna installare le dipenendenze ```libgmp3-dev``` ```libpq-dev``` ```libapache2-mod-wsgi-py3```
 
 ```
-curl https://www.pgadmin.org/static/packages_pgadmin_org.pub | sudo apt-key add
-sudo sh -c 'echo "deb https://ftp.postgresql.org/pub/pgadmin/pgadmin4/apt/$(lsb_release -cs) pgadmin4 main" > /etc/apt/sources.list.d/pgadmin4.list && apt update'
-sudo apt install pgadmin4
+sudo apt install libgmp3-dev libpq-dev libapache2-mod-wsgi-py3
+```
+
+Adesso bisogna creare le directory dove pgAdmin andrà a salvare le sessioni, i dati e i log:
+
+```
+sudo mkdir -p /var/lib/pgadmin4/sessions
+sudo mkdir /var/lib/pgadmin4/storage
+sudo mkdir /var/log/pgadmin4
+```
+
+E' necessario cambiare la proprietà delle directory e assegnarle ad un utente non-root.
+
+```
+sudo chown -R wilson:wilson /var/lib/pgadmin4
+sudo chown -R wilson:wilson /var/log/pgadmin4
+```
+
+E' necessario installare il modulo ***venv*** al fine di creare un ambiente virtuale nel quale installare pgAdmin4 e creare una directory associata:
+
+```
+sudo apt-get install -y python3-venv
+mkdir environments
+cd environments
+```
+
+In questo momento si è all'interno della cartella environments. Da qui si può creare l'ambiente virtuale:
+
+```
+python3 -m venv my_env
+```
+
+Per attivarlo bisogna eseguire il comando:
+
+
+```
+source my_env/bin/activate
+```
+
+
+## Installazione di pgAdmin4
+
+Bisogna scaricare manualmente il codice sorgente di pgAdmin4 per essere eseguito in python. Cliccare sul seguente link https://www.postgresql.org/ftp/pgadmin/pgadmin4/ scegliere l'utlima versione e navigare nella cartella pip. Copiare il link del file che trmina per .whl e da terminale, tramite il comando wget, scaircare il file all'interno del server.
+
+```
+wget https://ftp.postgresql.org/pub/pgadmin/pgadmin4/v4.30/pip/pgadmin4-4.30-py3-none-any.whl
+```
+
+Successivamente installare il pacchetto wheel.
+
+```
+python -m pip install wheel
+```
+
+Installare il pacchetto pgAdmin 4 con il seguente comando:
+
+```
+python -m pip install pgadmin4-4.30-py3-none-any.whl
+```
+
+## Configurare pgAdmin 4
+
+E' possibile configurare pgAdmin 4 modificando il file config.py. Per evitare problemi creeremo il file config_local.py le cui impostazioni verranno lette dopo il primo file.
+
+```
+nano my_env/lib/python3.8/site-packages/pgadmin4/config_local.py
+```
+
+All'interno dell'editor incollare il seguente contenuto:
+
+```
+LOG_FILE = '/var/log/pgadmin4/pgadmin4.log'
+SQLITE_PATH = '/var/lib/pgadmin4/pgadmin4.db'
+SESSION_DB_PATH = '/var/lib/pgadmin4/sessions'
+STORAGE_DIR = '/var/lib/pgadmin4/storage'
+SERVER_MODE = True
+```
+
+Passo successivo è quello di aggiungere le credenziali per l'accesso a pgAdmin4:
+
+```
+python my_env/lib/python3.8/site-packages/pgadmin4/setup.py
+```
+
+Disattivare l'ambiente virtuale
+
+```
+deactivate
+```
+
+I file creati all'interno del file config_local.py devono essere accessibili agli utenti e ai gruppi di utenti che in ubuntu sono www-data (utente webserver di ubuntu)
+
+```
+sudo chown -R www-data:www-data /var/lib/pgadmin4/
+sudo chown -R www-data:www-data /var/log/pgadmin4/
+```
+
+## Configurare Apache
+
+Apache web server utilizza i virtual host per caratterizzare le configurazioni ed opsitare più di un dominio dal singolo server. Settiamo un virtual host specifico per pgAdmin. Spostiamoci nella directory principale:
+
+```
+cd
+```
+
+Creiamo un nuovo file nella cartella ```/sites-available/``` chiamata ```pgadmin4.conf```
+
+```
+sudo nano /etc/apache2/sites-available/pgadmin4.conf
+```
+
+Incolliamo il segunete contenuto nel file appena creato (assicurarsi che la versione di python sia quella corretta):
+
+```
+<VirtualHost *>
+    ServerName your_server_ip
+
+    WSGIDaemonProcess pgadmin processes=1 threads=25 python-home=/home/wilson/environments/my_env
+    WSGIScriptAlias / /home/wilson/environments/my_env/lib/python3.8/site-packages/pgadmin4/pgAdmin4.wsgi
+
+    <Directory "/home/wilson/environments/my_env/lib/python3.8/site-packages/pgadmin4/">
+        WSGIProcessGroup pgadmin
+        WSGIApplicationGroup %{GLOBAL}
+        Require all granted
+    </Directory>
+</VirtualHost>
+```
+
+Aggiungere il script ```a2dissite``` per disabilitare il virtual host di default:
+
+```
+sudo a2dissite 000-default.conf
+```
+
+Ora abilitare il file di configurazione del virtual host pgAdmin:
+
+```
+sudo a2ensite pgadmin4.conf
+```
+
+Verificare la correttezza della sintassi:
+
+```
+apachectl configtest
+```
+
+Attivare il virtual host:
+
+```
+sudo systemctl restart apache2
 ```
