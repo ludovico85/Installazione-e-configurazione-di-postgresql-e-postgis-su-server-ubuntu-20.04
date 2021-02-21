@@ -9,7 +9,7 @@ In ambiente Linux, l'utente ***root*** è l'utente amministratore e possiede mol
 Una volta loggato come utente ***root*** per creare un nuovo utente ***wilson*** digitare:
 
 ```
-add user wilson
+adduser wilson
 ```
 ### 2) Impostazione dei privilegi
 Per impostare il nuovo utente ***wilson*** come superuser (che permette di avere i privilegi di amministratore utilizzando la parola ```sudo```) prima di ogni comando, bisogna aggiungere l'utente al gruppo ***sudo***.
