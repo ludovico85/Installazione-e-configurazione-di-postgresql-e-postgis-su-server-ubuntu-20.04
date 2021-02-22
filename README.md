@@ -406,6 +406,9 @@ sudo systemctl restart apache2
 
 Aprire il browser e digitare http://my_server_IP/pgadmin4
 
+La pagina che si apre dovrebbe essere la seguente:
+
+![Alt text](/img/pgadmin4.JPG)
 
 ## Installazione di PostGIS
 
@@ -449,5 +452,3 @@ Riavviare il servizio:
 ```
 sudo service postgresql restart
 ```
-
-
