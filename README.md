@@ -1,6 +1,6 @@
 # Installazione e configurazione di postgresql e postgis su server Ubuntu 20.04
 
-## Settaggio iniziale del server Ubuntu
+## Configurazione iniziale del server Ubuntu
 Istruzioni tradotte da https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-20-04
 
 In ambiente Linux, l'utente ***root*** è l'utente amministratore e possiede moltissimi privilegi. Per tali motivi è altamente sconsigliato utilizzarlo (rischio di danni irreversibili). Invece è consigliato creare un nuovo utente e loggarsi con quest'ultimo.
@@ -20,7 +20,7 @@ Da utente ***root*** digitare il comando:
 usermod -aG sudo wilson
 ```
 
-Per switchare tra utenti:
+Per cambiare l'utente:
 
 ```
 sudo -i -u wilson
