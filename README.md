@@ -165,11 +165,30 @@ Di default l'account postgres non ha alcuna password settata. Per settare una nu
 ```
 postgres=# ALTER USER postgres PASSWORD 'myPassword';
 ```
+
+E' possibile creare un nuovo utente/ruolo con il comando:
+
+```
+sudo -u postgres createuser --interactive
+```
+oppure, se si è loggati con l'account postgres:
+
+```
+createuser --interactive
+```
+
 Un altro assunto di PostgreSQL prevede che qualsiasi ruolo utilizzato per loggarsi debba avere un database associato con lo stesso nome. Per creare un nuovo db come utente postgres:
+
+```
+sudo -u postgres createdb wilson
+```
+
+oppure, se si è loggati con l'account postgres:
 
 ```
 createdb wilson
 ```
+
 
 Adesso è possibile connettersi al nuovo db utilizzando il ruolo creato in precedenza.
 
@@ -178,8 +197,13 @@ sudo -i -u wilson
 psql
 ```
 
+Per verificare la connessione:
 
-## Installazione di pgAdmin4 in server mode
+```
+\conninfo
+```
+
+## Installazione di pgAdmin4 in server mode (Prima soluzione)
 
 Tutorial tradotto da https://www.digitalocean.com/community/tutorials/how-to-install-configure-pgadmin4-server-mode
 
@@ -364,6 +388,25 @@ sudo -u wilson psql
 ALTER USER sammy PASSWORD 'password';
 ```
 
+## Installazione di pgAdmin4 in server mode (Seconda soluzione)
+E' possibile installare pgAdmin4 in server mode utilizzando il pacchetto ```pgadmin4-apache2```
+
+```
+sudo apt update
+sudo apt install pgadmin4 pgadmin4-apache2
+```
+
+Durante l'installazione verrà chiesto di inserire l'user e la password.
+
+Riavviare il servizio apache2:
+
+```
+sudo systemctl restart apache2
+```
+
+Aprire il browser e digitare http://my_server_IP/pgadmin4
+
+
 ## Installazione di PostGIS
 
 Uno dei possibili modi per installare PostGIS su server ubuntu è quello di utilizzare UbuntuGIS. Per prima cosa bisogna aggiungere il repository:
@@ -406,3 +449,5 @@ Riavviare il servizio:
 ```
 sudo service postgresql restart
 ```
+
+
