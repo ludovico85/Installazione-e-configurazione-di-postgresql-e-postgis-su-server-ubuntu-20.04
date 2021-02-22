@@ -77,8 +77,9 @@ Istruzioni tradotte da https://www.digitalocean.com/community/tutorials/how-to-i
 Aggiornare i pacchetti di ubuntu:
 
 ```
-apt-get update && apt-get upgrade
-``
+sudo apt-get update
+sudo apt update
+```
 
 Per installare Apache digitare:
 
