@@ -30,25 +30,25 @@ sudo -i -u wilson
 Ufw è l'applicazione predefinita di Ubuntu per la configurazione del firewall. Per vedere la lista della applicazioni gestite da Ufw:
 
 ```
-ufw app list
+sudo ufw app list
 ```
 
 Dobbiamo assicurarci che il firewall permetta le connessioni SSH per consertirci di loggarci al prossimo avvio.
 
 ```
-ufw allow OpenSSH
+sudo ufw allow OpenSSH
 ```
 
 Abilitare il firewall:
 
 ```
-ufw enable
+sudo ufw enable
 ```
 
 Per verificare lo stato e le connessioni consentite:
 
 ```
-ufw status
+sudo ufw status
 ```
 
 ***Il firewall in questo momento blocca tutte le connessioni in entrata tranne che SSH;*** Nel caso di installazione di servizi addizzionali è necessario modificare le impostazioni del firewall.
