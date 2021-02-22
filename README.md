@@ -364,6 +364,7 @@ sudo nano /etc/apache2/sites-available/pgadmin4.conf
 
 Incolliamo il segunete contenuto nel file appena creato (assicurarsi che la versione di python sia quella corretta):
 
+
 ```
 <VirtualHost *>
     ServerName your_server_ip
@@ -378,8 +379,31 @@ Incolliamo il segunete contenuto nel file appena creato (assicurarsi che la vers
     </Directory>
 </VirtualHost>
 ```
+*** NOTA BENE*** Per eseguire pgadmin4 in server mode su un'altra porta bisogna:
+1. Abilitare la porta nella configurazione di apache2 ```ports.conf``` e aggiungere ```Listen 5050``` (per la porta 5050)
 
-Aggiungere il script ```a2dissite``` per disabilitare il virtual host di default:
+```
+sudo nano /etc/apache2/ports.conf
+```
+
+2. Modificare il contenuto di pgadmin4.conf:
+
+```
+<VirtualHost your_server_ip:5050>
+    ServerName your_server_ip:5050
+
+    WSGIDaemonProcess pgadmin processes=1 threads=25 python-home=/home/wilson/environments/my_env
+    WSGIScriptAlias / /home/wilson/environments/my_env/lib/python3.8/site-packages/pgadmin4/pgAdmin4.wsgi
+
+    <Directory "/home/wilson/environments/my_env/lib/python3.8/site-packages/pgadmin4/">
+        WSGIProcessGroup pgadmin
+        WSGIApplicationGroup %{GLOBAL}
+        Require all granted
+    </Directory>
+</VirtualHost>
+```
+
+Aggiungere lo script ```a2dissite``` per disabilitare il virtual host di default:
 
 ```
 sudo a2dissite 000-default.conf
