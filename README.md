@@ -187,7 +187,7 @@ sudo -u postgres psql
 Di default l'account postgres non ha alcuna password settata. Per settare una nuova password digitare:
 
 ```
-postgres=# ALTER USER postgres PASSWORD 'myPassword';
+ALTER USER postgres PASSWORD 'myPassword';
 ```
 
 E' possibile creare un nuovo utente/ruolo con il comando:
@@ -358,6 +358,7 @@ cd
 Creiamo un nuovo file nella cartella ```/sites-available/``` chiamata ```pgadmin4.conf```
 
 ```
+sudo touch /etc/apache2/sites-available/pgadmin4.conf
 sudo nano /etc/apache2/sites-available/pgadmin4.conf
 ```
 
