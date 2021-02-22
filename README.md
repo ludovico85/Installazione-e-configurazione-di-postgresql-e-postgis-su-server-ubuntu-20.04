@@ -74,6 +74,12 @@ Adesso è possibile iniziare una nuova sessione loggandosi con il nuovo utente.
 ## Installazione di Apache Web Server (opzionale, necessario per pgAdmin4)
 Istruzioni tradotte da https://www.digitalocean.com/community/tutorials/how-to-install-the-apache-web-server-on-ubuntu-20-04
 
+Aggiornare i pacchetti di ubuntu:
+
+```
+apt-get update && apt-get upgrade
+``
+
 Per installare Apache digitare:
 
 ```
@@ -135,6 +141,12 @@ sudo systemctl enable apache2
 ## Installazione di PostgreSQL
 
 Tutorial tradotto da https://www.digitalocean.com/community/tutorials/how-to-install-postgresql-on-ubuntu-20-04-quickstart
+
+Aggiornare i pacchetti di ubuntu:
+
+```
+apt-get update && apt-get upgrade
+```
 
 Per installare PostgreSQL insieme ad altre utility, aggiungere ```-contrib``` all'installazione.
 
