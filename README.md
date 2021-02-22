@@ -57,6 +57,13 @@ sudo ufw status
 
 Una volta che è stato creato un nuovo utente bisogna assicurare l'accesso diretto al server che dipende dalla tipologia di autenticazione scelta. Se ci si logga come root utilizzando una chiave SSH, bisogna aggiungere una copia public key al nuovo utente. Siccome una copia della chiave esiste già per l'account root, basta copiarla per il nuovo account, settare i permessi giusti e modificare la proprietà del file.
 
+Riabilitare l'utente root:
+
+```
+sudo -i -u root
+```
+
+Settare la chiave SSH:
 
 ```
 rsync --archive --chown=wilson:wilson ~/.ssh /home/wilson
@@ -88,6 +95,10 @@ Per verificare lo stato di Apache digitare:
 ```
 sudo systemctl status apache2
 ```
+
+Per verificare che l'installazione sia andata a buon fine, digitare nel browser l'indirizzo IP. Dovrebbe apparire la pagina di apache2.
+
+![Alt text](/img/apache2.JPG)
 
 Per mostrare gli indirizzi IP:
 
