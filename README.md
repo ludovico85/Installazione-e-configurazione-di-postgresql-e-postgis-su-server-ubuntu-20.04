@@ -227,6 +227,24 @@ Per verificare la connessione:
 \conninfo
 ```
 
+###
+Postresql di deafult blocca le connessioni in entrata, ad eccezione di quelle provenienti dalla stessa macchina/server dove è installato (localhost). Per abilitare le connessioni, modificare il file di configurazione pg_hba.conf e modificare:
+
+```
+/etc/postgresql/12/main/pg_hba.conf
+```
+
+```
+#host    all             all             127.0.0.1/32            md5
+host    all             all             0.0.0.0/0               md5
+```
+
+Riavviare il servizio:
+
+```
+sudo service postgresql restart
+```
+
 ## Installazione di pgAdmin4 in server mode (Prima soluzione)
 
 Tutorial tradotto da https://www.digitalocean.com/community/tutorials/how-to-install-configure-pgadmin4-server-mode
