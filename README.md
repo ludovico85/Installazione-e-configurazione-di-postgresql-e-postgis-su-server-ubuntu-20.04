@@ -254,6 +254,12 @@ Riavviare il servizio:
 sudo service postgresql restart
 ```
 
+Abilitare le connessioni in entrata da firewall
+
+```
+ufw allow from client-ip-address to any port 5432
+```
+
 ## Installazione di pgAdmin4 in server mode (Prima soluzione)
 
 Tutorial tradotto da https://www.digitalocean.com/community/tutorials/how-to-install-configure-pgadmin4-server-mode
