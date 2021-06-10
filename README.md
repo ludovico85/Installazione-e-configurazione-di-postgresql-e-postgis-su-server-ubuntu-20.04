@@ -259,6 +259,10 @@ Abilitare le connessioni in entrata da firewall
 ```
 ufw allow from client-ip-address to any port 5432
 ```
+oppure:
+```
+sudo ufw allow 5432/tcp
+```
 
 ## Installazione di pgAdmin4 in server mode (Prima soluzione)
 
