@@ -231,7 +231,7 @@ Per verificare la connessione:
 Postgresql di deafult blocca le connessioni in entrata, ad eccezione di quelle provenienti dalla stessa macchina/server dove è installato (localhost). Per abilitare le connessioni, modificare il file di configurazione pg_hba.conf e il file postgresql.conf modificare:
 
 ```
-sud nano /etc/postgresql/12/main/pg_hba.conf
+sudo nano /etc/postgresql/12/main/pg_hba.conf
 ```
 
 ```
